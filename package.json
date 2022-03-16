@@ -1,0 +1,33 @@
+{
+	"name": "image_resizer_v2",
+	"version": "1.0.0",
+	"description": "resizes images",
+	"license": "CC BY-NC-SA 4.0",
+	"author": "Aidan647",
+	"main": "dist/index.js",
+	"scripts": {
+		"test": "tsc && tsc --project tsconfig.test.json && mocha --enable-source-maps --timeout 20s",
+		"preinstall":"//TODO сделать проверку системы"
+	},
+	"bin": {
+		"image-resizer": "./dist/index.js"
+	},
+	"dependencies": {
+		"args": "^5.0.1",
+		"cli-progress": "^3.10.0",
+		"mocha": "^9.2.2",
+		"prompts": "^2.4.2",
+		"sharp": "^0.30.2",
+		"yargs": "^17.3.1"
+	},
+	"devDependencies": {
+		"@types/args": "^5.0.0",
+		"@types/cli-progress": "^3.9.2",
+		"@types/mocha": "^9.1.0",
+		"@types/prompts": "^2.0.14",
+		"@types/sharp": "^0.30.0",
+		"@types/typescript": "^2.0.0",
+		"@types/yargs": "^17.0.9",
+		"typescript": "^4.6.2"
+	}
+}

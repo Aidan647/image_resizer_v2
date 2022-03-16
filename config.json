@@ -1,0 +1,14 @@
+{
+	"core": 20,
+	"action": 3,
+	"width": 10,
+	"height": 20,
+	"resizeMode": 2,
+	"color": "ffff",
+	"overwrite": true,
+	"quality": 90,
+	"prefix": "prfix-",
+	"suffix": "-suf",
+	"path": ".",
+	"path_out": "."
+}

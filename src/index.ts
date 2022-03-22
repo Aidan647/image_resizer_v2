@@ -2,21 +2,18 @@
 
 import fs from "fs/promises"
 import Config from "./config"
+import {delay} from "./utils"
 import { Directory } from "./files"
 import WorkerManager from "./WorkerManager"
 import cliProgress from "cli-progress"
 import resizer, { data } from "./resizer"
 import yargs from "yargs"
 import { hideBin } from "yargs/helpers"
-
 const SupportedOS: typeof process.platform[] = ["win32", "linux"]
 if (!SupportedOS.includes(process.platform)) {
 	console.log("Unsupported OS")
 	process.exit(1)
 }
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
-const default_file = "./imgResDef.json"
-export { SupportedOS }
 const loadArgs = () => {
 	return (
 		yargs(hideBin(process.argv))

@@ -42,6 +42,7 @@ describe("Tests", function () {
 			height: 100,
 			resizeMode: "contain",
 			color: "FFF0",
+			formatForce: null,
 			overwrite: true,
 			quality: 90,
 			compression: 9,
@@ -77,6 +78,7 @@ describe("Tests", function () {
 				height: 100,
 				resizeMode: "contain",
 				color: "FFF0",
+				formatForce: null,
 				overwrite: true,
 				quality: 90,
 				compression: 9,
@@ -126,7 +128,7 @@ describe("Tests", function () {
 				const stat = await fs.stat(Settings.path)
 				dir = await new Directory(Settings.path, stat).read(true)
 				// clear output folder before test
-				await fs.rm(Settings.path_out, { recursive: true })
+				await fs.rm(Settings.path_out, { recursive: true }).catch(() => {})
 			})
 
 			tests.forEach((test) => {

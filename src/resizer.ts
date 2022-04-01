@@ -5,7 +5,6 @@ import { exists, isFolder, getAbsolutePathForTask } from "./utils"
 import path from "path"
 import sharp from "sharp"
 import fs from "fs/promises"
-import optimize from "./optimizer"
 
 export type data = {
 	Settings: questionConfig
@@ -14,6 +13,7 @@ export type data = {
 export const resizer = async (task: File, data: data) => {
 	const Settings = data.Settings
 	data?.bar?.increment()
+	if (Settings.action === 2) return
 	const outPath = getAbsolutePathForTask(Settings, task.path)
 	if (!Settings.overwrite && (await exists(path.dirname(outPath)))) {
 		return
@@ -24,13 +24,6 @@ export const resizer = async (task: File, data: data) => {
 		}
 		resolve()
 	}).catch(() => {})
-	if (Settings.action === 2) {
-		await folderCreation
-		await fs.copyFile(task.pathAbsolute, outPath).then(() => {
-			return optimize(outPath, task, Settings)
-		}).catch(console.error)
-		return
-	}
 	const file = sharp(task.pathAbsolute)
 	file.resize({
 		height: Settings.height === 0 ? undefined : Settings.height,
@@ -52,9 +45,7 @@ export const resizer = async (task: File, data: data) => {
 		file.tiff({ quality: Settings.quality })
 	}
 	await folderCreation
-	await file.toFile(outPath).then(() => {
-		if (Settings.action === 3) return optimize(outPath, task, Settings, metadata)
-	}).catch(() => {
+	await file.toFile(outPath).catch(() => {
 		console.log(`Error resizing ${task.path}`)
 	})
 }

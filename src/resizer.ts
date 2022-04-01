@@ -32,16 +32,16 @@ export const resizer = async (task: File, data: data) => {
 		background: Settings.resizeMode === "contain" ? "#" + Settings.color : undefined,
 	})
 	const metadata = await file.metadata()
-	if (metadata.format === "jpeg") {
+	if ((metadata.format === "jpeg" && Settings.formatForce === null) || Settings.formatForce === "jpg") {
 		file.jpeg({ quality: Settings.quality })
 	}
-	if (metadata.format === "png") {
+	if ((metadata.format === "png" && Settings.formatForce === null) || Settings.formatForce === "png") {
 		file.png({ compressionLevel: Settings.compression })
 	}
-	if (metadata.format === "webp") {
+	if ((metadata.format === "webp" && Settings.formatForce === null) || Settings.formatForce === "webp") {
 		file.webp({ quality: Settings.quality })
 	}
-	if (metadata.format === "tiff") {
+	if ((metadata.format === "tiff" && Settings.formatForce === null)) {
 		file.tiff({ quality: Settings.quality })
 	}
 	await folderCreation

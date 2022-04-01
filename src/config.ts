@@ -209,26 +209,64 @@ export class Config {
 			})
 		).overwrite
 		if (this.config.action !== 2) {
-			this.config.quality = (
+			this.config.formatForce = (
 				await prompts({
-					type: "number",
-					name: "quality",
-					message: tr.get("quality"),
-					initial: 90,
-					min: 0,
-					max: 100,
+					type: "select",
+					name: "formatForce",
+					message: tr.get("formatForce"),
+					choices: [
+						{
+							title: "default",
+							value: null,
+							description:
+								"Keep the original format",
+						},
+						{
+							title: "png",
+							value: "png",
+							description:
+								'Convert to all images "png"',
+						},
+						{
+							title: "jpg",
+							value: "jpg",
+							description:
+								'Convert to all images "jpg"',
+						},
+						{
+							title: "webp",
+							value: "webp",
+							description:
+								'Convert to all images "webp"',
+						},
+					],
+					initial: 0,
 				})
-			).quality
-			this.config.compression = (
-				await prompts({
-					type: "number",
-					name: "compression",
-					message: tr.get("compression"),
-					initial: 6,
-					min: 0,
-					max: 9,
-				})
-			).compression
+			).formatForce
+			if (this.config.formatForce === "jpg" || this.config.formatForce === "webp" || this.config.formatForce === null) {
+				this.config.quality = (
+					await prompts({
+						type: "number",
+						name: "quality",
+						message: tr.get("quality"),
+						initial: this.config.formatForce === "webp" ? 100 : 90,
+						min: 0,
+						max: 100,
+					})
+				).quality
+			} else this.config.quality = 95
+			if (this.config.formatForce === "png" || this.config.formatForce === null) {
+				this.config.compression = (
+					await prompts({
+						type: "number",
+						name: "compression",
+						message: tr.get("compression"),
+						initial: 6,
+						min: 0,
+						max: 9,
+					})
+				).compression
+			} else this.config.compression = 6
 		}
 
 		await prompts([
@@ -281,9 +319,8 @@ export class Config {
 				},
 			})
 		).path_out
-		if (
-			(
-				await prompts({
+		
+		const save =		(await prompts({
 					type: "toggle",
 					active: "yes",
 					inactive: "no",
@@ -293,9 +330,10 @@ export class Config {
 					initial: false,
 				})
 			).save
-		) {
+		if (save) {
 			this.saveToFile()
 		}
+		
 	}
 
 	get() {

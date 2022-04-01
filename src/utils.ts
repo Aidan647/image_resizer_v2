@@ -1,7 +1,7 @@
-import fs               from "fs/promises"
-import path             from "path"
-import {questionConfig} from "./questionTypes"
-import {exec}           from "child_process"
+import fs from "fs/promises"
+import path from "path"
+import { questionConfig } from "./questionTypes"
+import { exec } from "child_process"
 
 export const isFolder = async (path: string) => {
 	return fs.stat(path).then(
@@ -11,7 +11,7 @@ export const isFolder = async (path: string) => {
 		() => false
 	)
 }
-export const exists   = async (path: string) => {
+export const exists = async (path: string) => {
 	return fs.stat(path).then(
 		() => true,
 		() => false
@@ -19,14 +19,20 @@ export const exists   = async (path: string) => {
 }
 
 export const getAbsolutePathForTask = (Settings: questionConfig, source: string) => {
+	var ext_name = path.extname(source)
+	// @ts-ignore
+	if (Settings.formatForce) {
+		// @ts-ignore
+		ext_name = "." + Settings.formatForce
+	}
 	const taskPathName =
-			  Settings.prefix + path.basename(source).replace(path.extname(source), Settings.suffix + path.extname(source))
-	const outPath      = path.resolve(
+		Settings.prefix + path.basename(source).replace(path.extname(source), Settings.suffix + ext_name)
+	const outPath = path.resolve(
 		path.join(Settings.path_out, path.relative(Settings.path, path.join(path.dirname(source), taskPathName)))
 	)
 	return outPath
 }
-export const execShellCommand       = (cmd: string): Promise<string> => {
+export const execShellCommand = (cmd: string): Promise<string> => {
 	return new Promise<string>((resolve, reject) => {
 		exec(cmd, (error, stdout, stderr) => {
 			if (error) {
@@ -36,34 +42,32 @@ export const execShellCommand       = (cmd: string): Promise<string> => {
 		})
 	})
 }
-export const delay                  = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 export const tr: {
-	locale: string,
-	file: string,
-	data: { [key: string]: string },
+	locale: string
+	file: string
+	data: { [key: string]: string }
 	setLocale: (locale: string) => Promise<void>
-	get: (key: string,data?:{ [key: string]: string }) => string
-}                                   = {
+	get: (key: string, data?: { [key: string]: string }) => string
+} = {
 	locale: "",
 	file: "",
-	data  : {},
+	data: {},
 	async setLocale(locale: string) {
 		this.locale = locale
-		this.file = path.join(__dirname, '..', 'languages', locale + '.json')
+		this.file = path.join(__dirname, "..", "languages", locale + ".json")
 		try {
-			if(await exists(this.file)) {
+			if (await exists(this.file)) {
 				await fs.readFile(this.file, "utf8").then((std) => {
 					this.data = JSON.parse(std)
 				})
-			}else{
-				await fs.writeFile(this.file,"")
-				this.setLocale('en-US')
+			} else {
+				await fs.writeFile(this.file, "")
+				this.setLocale("en-US")
 			}
-		} catch (e) {
-
-		}
+		} catch (e) {}
 	},
-	get(key, data={}) {
+	get(key, data = {}) {
 		if (this.data[key] != undefined) {
 			let txt = this.data[key]
 			for (let i in data) {
@@ -71,9 +75,8 @@ export const tr: {
 			}
 			return txt
 		}
-		return ""
-	}
-
+		return key
+	},
 }
 
-export default {isFolder, exists, getAbsolutePathForTask, execShellCommand, delay,tr}
+export default { isFolder, exists, getAbsolutePathForTask, execShellCommand, delay, tr }

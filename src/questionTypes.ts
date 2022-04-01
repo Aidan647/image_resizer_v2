@@ -4,6 +4,7 @@ export interface resizeGlobal {
 	width: number
 	height: number
 	overwrite: boolean
+	formatForce: null | "jpg" | "png" | "webp"
 	quality: number
 	compression: zeroToNine
 	prefix: string

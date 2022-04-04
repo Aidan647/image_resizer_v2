@@ -129,3 +129,4 @@ dist
 
 test/images
 !test/images/input
+pkg/*

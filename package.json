@@ -1,7 +1,7 @@
 {
 	"name": "image_resizer_v2",
-	"version": "1.0.0",
-	"description": "resizes images",
+	"version": "1.0.1",
+	"description": "multi stream resizes images",
 	"license": "CC BY-NC-SA 4.0",
 	"author": "Aidan647",
 	"contributors": [
@@ -39,6 +39,9 @@
 			"languages/**/*",
 			"optimizers/**/*",
 			"node_modules/sharp/**/*"
+		],
+		"target": [
+			"node16-win-x64"
 		],
 		"outputPath": "pkg"
 	},

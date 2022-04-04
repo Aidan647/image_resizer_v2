@@ -83,8 +83,8 @@ export class Config {
 				hint: "Never optimize images without backup",
 				choices: [
 					{ title: "resize", value: 1 },
-					{ title: "optimize", value: 2 },
-					{ title: "resize & optimize", value: 3 },
+					// { title: "optimize", value: 2 },
+					// { title: "resize & optimize", value: 3 },
 				],
 				initial: 0,
 			})
@@ -145,16 +145,16 @@ export class Config {
 						message: tr.get("resizeMode"),
 						choices: [
 							{
-								title: "cover",
-								value: "cover",
-								description:
-									"Preserving aspect ratio, ensure the image covers both provided dimensions by cropping/clipping to fit.",
-							},
-							{
 								title: "contain",
 								value: "contain",
 								description:
 									'Preserving aspect ratio, contain within both provided dimensions using "letterboxing" where necessary.',
+							},
+							{
+								title: "cover",
+								value: "cover",
+								description:
+									"Preserving aspect ratio, ensure the image covers both provided dimensions by cropping/clipping to fit.",
 							},
 							{
 								title: "fill",

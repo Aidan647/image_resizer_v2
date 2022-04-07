@@ -17,7 +17,6 @@
 	"main": "dist/index.js",
 	"files": [
 		"dist/*",
-		"src/languages/*",
 		"optimizers/*",
 		"LICENSE",
 		"README.md"
@@ -35,7 +34,7 @@
 		"image-resizer": "./dist/index.js"
 	},
 	"pkg": {
-		"scripts": ["dist/**/*.js","node_modules/sharp/**/*.js","languages/*.js"],
+		"scripts": ["dist/**/*.js","node_modules/sharp/**/*.js"],
 		"assets": [
 			"optimizers/*",
 			"node_modules/sharp/**/*"

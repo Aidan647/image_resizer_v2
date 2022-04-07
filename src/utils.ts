@@ -43,6 +43,12 @@ export const execShellCommand = (cmd: string): Promise<string> => {
 	})
 }
 export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+import lang from "./languages/ru-RU"
+import lang2 from "./languages/en-US"
+const data:{[key: string]: any} = {
+	'ru-RU':lang,
+	'en-US':lang2
+}
 export const tr: {
 	locale: string
 	file: string
@@ -55,14 +61,19 @@ export const tr: {
 	data: {},
 	async setLocale(locale: string) {
 		this.locale = locale
-		this.file = path.join(__dirname, "languages", locale + ".js")
-		try {
-			if (await exists(this.file)) {
-				this.data = require(this.file).lang
-			} else {
-				this.setLocale("en-US")
+		if(typeof data[locale] != 'undefined'){
+			this.data = data[locale]
+		}else {
+			this.file = path.join(__dirname, "languages", locale + ".js")
+			try {
+				if (await exists(this.file)) {
+					this.data = require(this.file).lang
+				} else {
+					this.setLocale("en-US")
+				}
+			} catch (e) {
 			}
-		} catch (e) {}
+		}
 	},
 	get(key, data = {}) {
 		if (this.data[key] != undefined) {

@@ -20,7 +20,7 @@ const apps: {
 	}
 } = {
 	pingo: {
-		path: path.join(__dirname, "..", "optimizers", "pingo.exe"),
+		path: path.join(process.cwd(), "optimizers", "pingo.exe"),
 		platform: "win32",
 		arch: ["x64"],
 		formats: ["png", "jpeg", "jpg", "webp"],
@@ -38,7 +38,7 @@ const apps: {
 		},
 	},
 	// optipng: {
-	// 	path: path.join(__dirname, "..", "optimizers", "optipng.exe"),
+	// 	path: path.join(process.cwd(), "optimizers", "optipng.exe"),
 	// 	platform: "win32",
 	// 	arch: ["x32"],
 	// 	formats: ["png", "gif", "tiff"],

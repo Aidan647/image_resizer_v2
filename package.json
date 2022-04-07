@@ -1,6 +1,6 @@
 {
 	"name": "image_resizer_v2",
-	"version": "1.0.1",
+	"version": "1.0.3",
 	"description": "multi stream resizes images",
 	"license": "CC BY-NC-SA 4.0",
 	"author": "Aidan647",
@@ -17,7 +17,7 @@
 	"main": "dist/index.js",
 	"files": [
 		"dist/*",
-		"languages/*",
+		"src/languages/*",
 		"optimizers/*",
 		"LICENSE",
 		"README.md"
@@ -28,16 +28,16 @@
 		"prepublish": "npm run test",
 		"preinstall": "tsc && node dist/system-test.js",
 		"postinstall": "npm link && node dist/hello.js",
-		"preuninstall": "npm unlink"
+		"preuninstall": "npm unlink",
+		"publish":"pkg ."
 	},
 	"bin": {
 		"image-resizer": "./dist/index.js"
 	},
 	"pkg": {
-		"scripts": ["dist/**/*.js","node_modules/sharp/**/*.js"],
+		"scripts": ["dist/**/*.js","node_modules/sharp/**/*.js","languages/*.js"],
 		"assets": [
-			"languages/**/*",
-			"optimizers/**/*",
+			"optimizers/*",
 			"node_modules/sharp/**/*"
 		],
 		"target": [

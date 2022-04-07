@@ -32,7 +32,6 @@ const loadArgs = () => {
 			.parse()
 	)
 }
-
 ;(async () => {
 	const argv = await loadArgs()
 	const config = await Config.getInstance()

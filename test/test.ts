@@ -1,13 +1,13 @@
-import { Directory } from "../dist/files"
-import { questionConfig } from "../dist/questionTypes"
-import { WorkerManager } from "../dist/WorkerManager"
-import assert from "assert"
-import Config from "../dist/config"
-import fs from "fs/promises"
-import path from "path"
-import { data, resizer } from "../dist/resizer"
-import utils from "../dist/utils"
-import sharp from "sharp"
+import {Directory}      from "../dist/files"
+import {questionConfig} from "../dist/questionTypes"
+import {WorkerManager}  from "../dist/WorkerManager"
+import assert           from "assert"
+import Config           from "../dist/config"
+import fs               from "fs/promises"
+import path             from "path"
+import {data, resizer}  from "../dist/resizer"
+import utils            from "../dist/utils"
+import sharp            from "sharp"
 
 describe("Tests", function () {
 	describe("utils", async () => {
@@ -69,40 +69,48 @@ describe("Tests", function () {
 	})
 	describe("App", () => {
 		describe("resizer", () => {
-			const Settings: questionConfig = {
-				core: 20,
-				action: 3,
-				lossy: false,
+			const Settings: questionConfig                                                                   = {
+				core        : 20,
+				action      : 3,
+				lossy       : false,
 				optimization: 9,
-				width: 100,
-				height: 100,
-				resizeMode: "contain",
-				color: "FFF0",
-				formatForce: null,
-				overwrite: true,
-				quality: 90,
-				compression: 9,
-				prefix: "",
-				suffix: "",
-				path: path.join(__dirname, "images", "input"),
-				path_out: path.join(__dirname, "images", "output"),
+				width       : 100,
+				height      : 100,
+				resizeMode  : "contain",
+				color       : "00FF00",
+				formatForce : null,
+				overwrite   : true,
+				quality     : 90,
+				compression : 9,
+				prefix      : "",
+				suffix      : "",
+				path        : path.join(__dirname, "images", "input"),
+				path_out    : path.join(__dirname, "images", "output"),
 			}
-			const images = ["200x1000.png", "1000x200.png", "1000x1000.png"]
-			const tests: ["cover" | "fill" | "inside" | "outside", { w: number; h: number }[]][] = [
+			const images                                                                                     = ["200x1000.png", "1000x200.png", "1000x1000.png"]
+			const tests: ["cover" | "fill" | "inside" | "outside" | "contain", { w: number; h: number }[]][] = [
 				[
 					"cover",
 					[
-						{ w: 100, h: 100 },
-						{ w: 100, h: 100 },
-						{ w: 100, h: 100 },
+						{w: 100, h: 100},
+						{w: 100, h: 100},
+						{w: 100, h: 100},
+					],
+				],
+				[
+					"contain",
+					[
+						{w: 100, h: 100},
+						{w: 100, h: 100},
+						{w: 100, h: 100},
 					],
 				],
 				[
 					"fill",
 					[
-						{ w: 100, h: 100 },
-						{ w: 100, h: 100 },
-						{ w: 100, h: 100 },
+						{w: 100, h: 100},
+						{w: 100, h: 100},
+						{w: 100, h: 100},
 					],
 				],
 				[

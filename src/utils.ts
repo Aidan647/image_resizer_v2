@@ -1,7 +1,7 @@
-import fs from "fs/promises"
-import path from "path"
-import { questionConfig } from "./questionTypes"
-import { exec } from "child_process"
+import fs               from "fs/promises"
+import path             from "path"
+import {questionConfig} from "./questionTypes"
+import {exec}           from "child_process"
 
 export const isFolder = async (path: string) => {
 	return fs.stat(path).then(
@@ -55,14 +55,11 @@ export const tr: {
 	data: {},
 	async setLocale(locale: string) {
 		this.locale = locale
-		this.file = path.join(__dirname, "..", "languages", locale + ".json")
+		this.file = path.join(__dirname, "languages", locale + ".js")
 		try {
 			if (await exists(this.file)) {
-				await fs.readFile(this.file, "utf8").then((std) => {
-					this.data = JSON.parse(std)
-				})
+				this.data = require(this.file).lang
 			} else {
-				await fs.writeFile(this.file, "")
 				this.setLocale("en-US")
 			}
 		} catch (e) {}
